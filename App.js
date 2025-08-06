@@ -1,71 +1,54 @@
-import {StyleSheet, View, ScrollView} from 'react-native';
-import PukarCard from './componenents/PukarCard';
+import {StyleSheet, View, Text, TextInput, Button} from "react-native";
+import {useState} from 'react';
 
 
 export default function App(){
-  const users =[
-    {
-      id: '1',
-      image: 'https://images.unsplash.com/photo-1526779259212-939e64788e3c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D',
-      title: 'Mr.', 
-      description: 'Software Engineer'
-    },
-    {
-      id: '2',
-      image: 'https://images.unsplash.com/photo-1526779259212-939e64788e3c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D',
-      title: 'Pukar',
-      description: "Software Developer"
-    },{
-      id: '3',
-      image: 'https://images.unsplash.com/photo-1526779259212-939e64788e3c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D',
-      title: 'Pukar Ojha',
-      description: "Senior Developer"
-    },
-    {
-      id: '4',
-      image: 'https://images.unsplash.com/photo-1526779259212-939e64788e3c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D',
-      title: 'Mr.Pukar',
-      description: "Software Programmer"
-    },
-    {
-      id: '5',
-      image: 'https://images.unsplash.com/photo-1526779259212-939e64788e3c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D',
-      title: 'Mr. Pukar Ojha',
-      description: "A senior Software Developer"
+
+    const [enteredText, setEnteredText] = useState('');
+    const[currentGoals, setCurrentGoals] = useState([]);
+
+    const addGoalHandler =()=>{
+        setCurrentGoals((currentGoals)=>[...currentGoals, enteredText]);
+        setEnteredText('');
     }
-    ,
-    {
-      id: '6',
-      image: 'https://images.unsplash.com/photo-1526779259212-939e64788e3c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D',
-      title: 'Mr. Pukar Ojha',
-      description: "A senior Software Engineer"
-    },
-    {
-      id: '7',
-      image: 'https://images.unsplash.com/photo-1526779259212-939e64788e3c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D',
-      title: 'Mr. Pukar Ojha',
-      description: "A senior Software Engineer"
-    }
-  ]
-  return(
-    <ScrollView style = {styles.scrollView} >
-    <View style= {styles.appContainer}>
-      {users.map((user)=>(
-        <PukarCard key={user.id} user = {user}/>
-      ))}
-      
-    </View>
-    </ScrollView>
-  )
+
+    return(
+        <View style= {styles.appContainer}>
+            <View style = {styles.inputContainer}>
+                <TextInput style = {styles.inputField} placeholder="Enter Goals" value = {enteredText} onChangeText={setEnteredText}/>
+                <Button title="Add Goals" onPress={addGoalHandler} />
+            </View>
+            <View >
+                <Text style= {styles.listGoals} >List of Goals: </Text>
+                {currentGoals.map((goal,index)=><Text key={index}> {goal}</Text>)}
+
+            </View>
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
-  scrollView:{
-    backgroundColor: 'grey'
-  },
-  appContainer:{
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-});
+    appContainer:{
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+    }
+    ,inputContainer:{
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingBottom: 15
+    },
+    inputField:{
+        height: 30,
+        width: '50%',
+        marginRight: 80,
+        borderRadius: 13,
+        borderColor: 'grey'
+    }
+    , listGoals:{
+        paddingBottom: 19,
+        borderBottomWidth: 1,
+        borderColor: 'grey'
+    }
+})
